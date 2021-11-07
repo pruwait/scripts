@@ -28,6 +28,11 @@ deb http://deb.debian.org/debian/ bullseye-updates main contrib non-free
 
 deb http://deb.debian.org/debian bullseye-backports main contrib non-free
 #deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
+
+
+#для нестабильных обновлений с драйверами
+#deb http://deb.debian.org/debian/ sid main non-free contrib
+#deb-src http://deb.debian.org/debian/ sid main non-free contrib
 EOF
 
 
@@ -43,13 +48,19 @@ apt install -y  \
    software-properties-common  \
    apparmor-utils  \
    avahi-daemon  \
-   dbus jq network-manager socat  \
+   dbus \
+   jq \
+   network-manager \
+   socat  \
    apt-transport-https \
    ca-certificates \
    curl \
    gnupg \
    lsb-release \
-   openssh-server mc
+   openssh-server \
+   mc \
+   udisks2 \
+   libglib2.0-bin \
 
 
 systemctl restart sshd
@@ -116,3 +127,28 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl start torrserver
 sudo systemctl enable torrserver
+
+echo -e "Timeout GRUB \n"
+# Убираем задержку при загрузке
+sudo sed 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' -i /etc/default/grub
+sudo update-grub
+
+echo -e "Docker Install \n"
+curl -fsSL get.docker.com | sh
+
+
+
+
+echo -e "OS Agent Install \n"
+cd ~
+
+curl -s https://api.github.com/repos/home-assistant/os-agent/releases/latest \
+| grep "browser_download_url.*linux_x86_64.deb" \
+| cut -d '"' -f 4 \
+| wget -qi -
+
+sudo dpkg -i os-agent*linux_x86_64.deb
+
+echo -e "Hassio Install \n"
+wget https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb
+dpkg -i homeassistant-supervised.deb
