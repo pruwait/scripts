@@ -54,7 +54,7 @@ apt install -y  \
 
 systemctl restart sshd
 
-# ╨а╤Г╤Б╤Б╨║╨░╤П ╨╗╨╛╨║╨░╨╗╤М
+# Русская локаль
 # Uncomment en_US.UTF-8 for inclusion in generation
 sed -i 's/^# *\(ru_RU.UTF-8\)/\1/' /etc/locale.gen
 
@@ -68,7 +68,7 @@ echo "export LC_ALL=ru_RU.UTF-8" >> ~/.bashrc
 echo "export LANG=ru_RU.UTF-8" >> ~/.bashrc
 echo "export LANGUAGE=ru_RU.UTF-8" >> ~/.bashrc
 
-# ╨а╤Г╤Б╤Б╨║╨░╤П ╨║╨╛╨╜╤Б╨╛╨╗╤М
+# Русская консоль
 cat <<-EOF > /etc/default/console-setup
 ACTIVE_CONSOLES="/dev/tty[1-6]"
 
@@ -81,13 +81,13 @@ FONTSIZE="8x16"
 VIDEOMODE=
 EOF
 
-# SUDO ╨▒╨╡╨╖ ╨┐╨░╤А╨╛╨╗╤П
+# SUDO без пароля
 
 echo "j ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/j
 
 
 echo -e "Torrserver \n"
-# ╨г╤Б╤В╨░╨╜╨░╨▓╨╗╨╕╨▓╨░╨╡╨╝  Torrserver
+# Устанавливаем  Torrserver
 
 sudo mkdir /opt/torrserver
 cd /opt/torrserver
