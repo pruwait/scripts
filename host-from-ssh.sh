@@ -15,3 +15,4 @@ sudo chown -R j:j /home/j/.ssh
 
 #создаём в докере папку ключей
 sudo docker exec -it homeassistant /bin/mkdir /config/sshkey -p
+sudo docker exec -it homeassistant /usr/bin/ssh-keygen -q -N '' -t rsa -f /config/sshkey/id_rsa
