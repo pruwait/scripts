@@ -18,6 +18,6 @@ sudo docker exec -it homeassistant /bin/mkdir /config/sshkey -p
 # генерируем ключ
 sudo docker exec -it homeassistant /usr/bin/ssh-keygen -q -N '' -t rsa -f /config/sshkey/id_rsa
 # создаем временную папку
-sudo docker exec -it homeassistant mkdir ~/.ssh
+sudo docker exec -it homeassistant mkdir /root/.ssh
 # копируем ключ на хост
 sudo docker exec -it homeassistant /usr/bin/ssh-copy-id  -i /config/sshkey/id_rsa.pub j@192.168.1.200
